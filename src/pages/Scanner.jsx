@@ -47,6 +47,7 @@ class BiometricProcessor {
 export default function Scanner() {
   const [dragActive, setDragActive] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [enhancedPreview, setEnhancedPreview] = useState(null);
   const [file, setFile] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
@@ -76,6 +77,7 @@ export default function Scanner() {
   const handleFile = (uploadedFile) => {
     setError(null);
     setResult(null);
+    setEnhancedPreview(null);
     if (processor.isValidType(uploadedFile)) {
       setFile(uploadedFile);
       const reader = new FileReader();
@@ -93,22 +95,36 @@ export default function Scanner() {
     if (!file) return;
     setIsProcessing(true);
     setError(null);
+    setResult(null);
     
     try {
       const res = await processor.processImage(file);
-      let finalResult = "Unknown";
-      if (res && res.metrics && res.metrics.classification) {
-        finalResult = res.metrics.classification;
-      } else if (res && res.classification) {
-        finalResult = res.classification;
+      
+      if (res && res.original_image_url) {
+        setPreview(`http://127.0.0.1:5000${res.original_image_url}`);
       }
-      // Enforce ONLY Aged or Labour for safety
-      if (finalResult.toLowerCase().includes('labour')) finalResult = "Labour Fingerprint";
-      else finalResult = "Aged Fingerprint";
+      if (res && res.processed_image_url) {
+        setEnhancedPreview(`http://127.0.0.1:5000${res.processed_image_url}`);
+      }
+
+      // Handle the "unknown" case from backend
+      if (res && (res.status === 'unknown' || res.error)) {
+        const msg = res.message || res.error || "Fingerprint not detected. Please upload a correct fingerprint.";
+        setError(msg);
+      }
+
+      let finalResult = "Unknown Result";
+      if (res && res.classification) {
+        finalResult = res.classification;
+      } else if (res && res.metrics && res.metrics.classification) {
+        finalResult = res.metrics.classification;
+      }
       
       setResult(finalResult);
+
     } catch (err) {
-      setError("Failed to connect to backend.");
+      setError("Failed to connect to backend processing pipeline.");
+      console.error(err);
     } finally {
       setIsProcessing(false);
     }
@@ -193,16 +209,26 @@ export default function Scanner() {
                   animate={{ opacity: 1 }}
                   className="w-full h-full flex flex-col"
                 >
-                  <div className="relative w-full h-64 rounded-xl overflow-hidden border bg-muted group mb-6">
-                    <img src={preview} alt="Preview" className="w-full h-full object-cover grayscale brightness-110" />
-                    {isProcessing && (
-                       <div className="absolute inset-0 bg-background/60 backdrop-blur-sm flex flex-col items-center justify-center gap-3">
-                         <motion.div animate={{ y: [-150, 150] }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }} className="absolute inset-x-0 h-[2px] bg-secondary shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
-                         <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center animate-pulse">
-                           <Scan className="w-6 h-6 text-white" />
+                  <div className="flex flex-row gap-4 mb-6">
+                    <div className="relative w-full h-48 md:h-64 rounded-xl overflow-hidden border bg-muted group flex-1">
+                      <p className="absolute top-2 left-2 z-10 bg-black/50 text-white text-[10px] px-2 py-1 rounded">Original</p>
+                      <img src={preview} alt="Original" className="w-full h-full object-cover grayscale brightness-110" />
+                      {isProcessing && (
+                         <div className="absolute inset-0 bg-background/60 backdrop-blur-sm flex flex-col items-center justify-center gap-3">
+                           <motion.div animate={{ y: [-150, 150] }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }} className="absolute inset-x-0 h-[2px] bg-secondary shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
+                           <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center animate-pulse">
+                             <Scan className="w-6 h-6 text-white" />
+                           </div>
+                           <span className="text-secondary font-bold tracking-widest uppercase text-xs">Analyzing Image...</span>
                          </div>
-                         <span className="text-secondary font-bold tracking-widest uppercase text-xs">Analyzing Image...</span>
-                       </div>
+                      )}
+                    </div>
+
+                    {enhancedPreview && (
+                      <div className="relative w-full h-48 md:h-64 rounded-xl overflow-hidden border bg-muted group flex-1">
+                        <p className="absolute top-2 left-2 z-10 bg-black/50 text-white text-[10px] px-2 py-1 rounded">Enhanced</p>
+                        <img src={enhancedPreview} alt="Enhanced" className="w-full h-full object-cover grayscale brightness-110" />
+                      </div>
                     )}
                   </div>
 
@@ -216,7 +242,7 @@ export default function Scanner() {
                         {isProcessing ? "Analyzing..." : "Classify Fingerprint"} <Cpu className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => { setPreview(null); setFile(null); }}
+                        onClick={() => { setPreview(null); setFile(null); setEnhancedPreview(null); }}
                         disabled={isProcessing}
                         className="w-full py-3 rounded-xl border font-bold text-xs text-muted-foreground hover:bg-muted transition-colors disabled:opacity-50"
                       >
@@ -230,7 +256,7 @@ export default function Scanner() {
                       </div>
                       <h3 className="text-2xl font-black text-foreground drop-shadow-sm tracking-tight">{result}</h3>
                       <button
-                        onClick={() => { setPreview(null); setFile(null); setResult(null); }}
+                        onClick={() => { setPreview(null); setFile(null); setResult(null); setEnhancedPreview(null); }}
                         className="w-full py-3 mt-4 rounded-xl font-bold text-sm bg-primary text-primary-foreground hover:opacity-90 transition-opacity premium-shadow"
                       >
                         Analyze Another

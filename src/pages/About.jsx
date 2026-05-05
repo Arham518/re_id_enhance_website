@@ -12,18 +12,18 @@ export default function About() {
   const features = [
     {
       icon: <Search className="w-6 h-6" />,
-      title: "Classification Model",
-      desc: "Introductory stage utilizing Convolutional Neural Networks to rapidly categorize and segment raw inputs."
+      title: "Smart Classifier",
+      desc: " An automated classifier categorizes incoming fingerprints as aged, labour-damaged, or normal, seamlessly routing them to the correct restoration pipeline."
     },
     {
       icon: <Shield className="w-6 h-6" />,
-      title: "Specialist Models",
-      desc: "Targeted enhancement for aged, cut, and wounded fingerprint patterns using domain-specific neural weights."
+      title: "Targeted Restoration",
+      desc: "Specialized models, including U-Net and Inpainting, intelligently restore faint ridges and reconstruct missing patches."
     },
     {
       icon: <Cpu className="w-6 h-6" />,
-      title: "Hybrid Architecture",
-      desc: "Advanced classification + fusion system that adaptively selects the best reconstruction path."
+      title: "Minutiae Recovery",
+      desc: "The system recovers critical minutiae points and ridge orientation, transforming unreadable degraded prints into clear, high-quality records."
     },
     {
       icon: <Database className="w-6 h-6" />,
@@ -61,18 +61,16 @@ export default function About() {
             className="space-y-16"
           >
             <div className="space-y-6">
-              <span className="text-xs font-black tracking-[.4em] text-secondary uppercase">the challenge</span>
+              <span className="text-xs font-black tracking-[.4em] text-secondary uppercase">THE CHALLENGE</span>
               <h2 className="text-4xl font-extrabold tracking-tight">The Degradation Gap</h2>
               <p className="text-muted-foreground text-lg leading-relaxed font-medium">
-                Standard AFIS systems rely on high-fidelity ridges. When faced with the complexities of aging, occupational wounding, or latent decay, traditional algorithms breakdown—leading to dangerous identification gaps in critical sectors.
-              </p>
+                Standard Automated Fingerprint Identification Systems (AFIS) are significantly affected when the fingerprints are damaged, aged, or wounded. When faced with the faint ridges of the elderly or the cut and scarred fingerprints of manual labourers, traditional systems fail. This leads to frustrating false rejections in pension claims, airport security, and forensic analysis.</p>
             </div>
             <div className="space-y-6">
               <span className="text-xs font-black tracking-[.4em] text-secondary uppercase">the innovation</span>
-              <h2 className="text-4xl font-extrabold tracking-tight">Biometric Insight Integration</h2>
+              <h2 className="text-4xl font-extrabold tracking-tight">Degradation-Aware Enhancement</h2>
               <p className="text-muted-foreground text-lg leading-relaxed font-medium">
-                Our innovation lies in <span className="text-foreground font-bold underline decoration-secondary decoration-2">Degradation-Aware Enhancement</span>. By treating every image as a unique problem, our models synthesize missing topological information rather than just sharpening existing pixels.
-              </p>
+               Our innovation lies in a smart classification and enhancement pipeline. The system first automatically identifies the specific type of fingerprint damage. Then, instead of just applying a basic filter, specialized restoration algorithms reconstruct broken ridges and recover missing minutiae details, ensuring highly accurate biometric matching.</p>
             </div>
           </motion.div>
           <motion.div
@@ -84,7 +82,7 @@ export default function About() {
             <div className="absolute -inset-4 bg-secondary/5 blur-3xl opacity-50" />
             <div className="glass p-4 rounded-[3rem] premium-shadow border rotate-1">
               <img
-                src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80"
+                src="https://cdn.prod.website-files.com/61845f7929f5aa517ebab941/64672278be2f9f9cdf75fc20_A%20fingerprint%20enrollment%20scene%20at%20the%20Aratek%20airport%20kiosk%20machine.jpg"
                 alt="Technology"
                 className="rounded-[2.5rem] shadow-inner grayscale"
                 referrerPolicy="no-referrer"
@@ -93,7 +91,6 @@ export default function About() {
             {/* Overlay card */}
             <div className="absolute -bottom-10 -right-6 glass p-6 rounded-3xl premium-shadow border max-w-[200px] hidden md:block animate-bounce-slow">
               <Fingerprint className="w-8 h-8 text-secondary mb-3" />
-              <p className="text-xs font-bold leading-tight">Forensic Grade Reconstruction Active</p>
             </div>
           </motion.div>
         </div>

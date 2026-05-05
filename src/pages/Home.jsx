@@ -44,7 +44,7 @@ export default function Home() {
             loop 
             muted 
             playsInline
-            className="absolute top-1/2 left-1/2 w-auto min-w-full min-h-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover"
+            className="bg-video absolute top-1/2 left-1/2 w-auto min-w-full min-h-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover"
           >
             <source src="/bg-video.mp4" type="video/mp4" />
           </video>
@@ -66,7 +66,7 @@ export default function Home() {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">INSIGHT.</span>
             </h1>
             <p className="text-xl text-foreground/80 mb-10 max-w-xl leading-relaxed font-medium">
-              Transform degraded, fragmented, or aged fingerprint data into forensic-grade digital records using our proprietary neural APIs. 
+              Enhance biometric accuracy for everyone. Our system categorizes normal, aged, and labour fingerprints, applying specialized enhancement to damaged fingerprints to ensure reliable and fast identity verification. 
             </p>
             <div className="flex flex-wrap gap-4">
               <button 
@@ -114,15 +114,14 @@ export default function Home() {
                 <ul className="space-y-3 text-muted-foreground font-medium">
                    <li className="flex items-start gap-2">
                      <div className="w-1.5 h-1.5 rounded-full  mt-2"></div>
-                     <span>Cuts, burns, or worn fingerprints common in labor-intensive work. Example: A worker with rough hands is unable to unlock a system.</span>
+                     <span>Wrinkly, cut, scarred, or worn fingerprints common in labor-intensive work. Example: A worker with rough hands is unable to unlock a system.</span>
                    </li>
                    <li className="flex items-start gap-2">
                      <div className="w-1.5 h-1.5 rounded-full  mt-2"></div>
-                     <span>Aging effects on facial or fingerprint patterns naturally over time.</span>
+                     <span>Aging effects on fingerprint patterns naturally over time. Fingerprints fades, causing scanner to reject or misread the fingerprints</span>
                    </li>
                    <li className="flex items-start gap-2">
                      <div className="w-1.5 h-1.5 rounded-full  mt-2"></div>
-                     <span>Incorrect finger placement or misalignment leading to chronic rejection.</span>
                    </li>
                 </ul>
              </motion.div>
@@ -138,7 +137,7 @@ export default function Home() {
                 <ul className="space-y-3 text-muted-foreground font-medium">
                    <li className="flex items-start gap-2">
                      <div className="w-1.5 h-1.5 rounded-full  mt-2"></div>
-                     <span>Corrupted biometric data records causing false negatives.</span>
+                     <span>Wrong biometric data records causing false negatives.</span>
                    </li>
                    <li className="flex items-start gap-2">
                      <div className="w-1.5 h-1.5 rounded-full mt-2"></div>
