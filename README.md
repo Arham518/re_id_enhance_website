@@ -1,20 +1,44 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# RE Touch ID — Website & Enhancement App
 
-# Run and deploy your AI Studio app
+Frontend and supporting backend for **RE Touch ID – Aged & Labour Fingerprint Enhancement Software**. The site explains the product, shows a gallery, and includes a scanner flow that sends fingerprint images to a Flask API for classification and enhancement-oriented processing.
 
-This contains everything you need to run your app locally.
+This repository is the web-facing project (React UI plus Python backend). Related training / CycleGAN code may also live here under `CycleGAN/`.
 
-View your app in AI Studio: https://ai.studio/apps/97c8c4f4-f4ed-4ef7-9b44-120de34d6b0f
+## What it does
 
-## Run Locally
+- Marketing and product pages (Home, About, Services, Gallery, Scanner)
+- Upload flow for degraded, aged, or labour-worn fingerprints
+- Flask API with scikit-learn classifier support
+- Optional CycleGAN-related scripts for fingerprint enhancement research
 
-**Prerequisites:**  Node.js
+## Tech stack
 
+**Frontend:** React, Vite, Tailwind CSS, React Three Fiber, Motion, React Router  
+**Backend:** Flask, Flask-CORS, scikit-learn, Pillow, NumPy, joblib
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Run the frontend
+
+```bash
+git clone https://github.com/Arham518/re_id_enhance_website.git
+cd re_id_enhance_website
+npm install
+npm run dev
+```
+
+Optional: create `.env.local` if you use Gemini or other keys locally (do not commit real secrets).
+
+## Run the backend
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
+
+Place model files (for example `manual_fingerprint_classifier.pkl`) where the backend expects them.
+
+## Developer
+
+**Muhammad Arham** — [GitHub](https://github.com/Arham518)
